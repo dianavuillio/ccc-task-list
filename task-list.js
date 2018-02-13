@@ -1,8 +1,8 @@
 var categorias = [
-{"value":"success","lable":"verduras"},
-{"value":"warning","label":"comida chatarra"},
-{"value":"info","lablr":"Frutas"},
-{"value":"secondart","lable":"Alcohol"},
+  {"value":"success","lable":"verduras"},
+  {"value":"warning","label":"comida chatarra"},
+  {"value":"info","lablr":"Frutas"},
+  {"value":"secondart","lable":"Alcohol"},
 ]
 
 $(document).ready(function(){
@@ -13,6 +13,16 @@ $(document).ready(function(){
 
   var template = '<li class="list-group-item list-group-item-action"></li>';
 
+  $('body').delegate('button.boton-eliminar','click',function( event ){
+    event.preventDefault();
+    if(confirm('¿Esta usted completamente segura?')){
+      var $target = $(this).parent();
+      $target.slideUp(500,function(){
+        $target.remove();
+      });
+
+    }
+  } );
   $formulario_de_lista.on('submit', function( event ){
     event.preventDefault();
     var texto_de_producto = $producto.val().trim();
@@ -24,9 +34,11 @@ $(document).ready(function(){
 
       var $new_row = $(
         '<li class="list-group-item text-'+clase.value+' list-group-item-action">' +
-      texto_de_producto +
-      '</li>'
-    );
+        texto_de_producto +
+        '<button class=\"btn btn-danger btn-sm float-right boton-eliminar\"><i class="fas fa-times"></i></button>' +
+
+        '</li>'
+      );
       $lista_principal.append( $new_row );
 
       $new_row.hide().fadeIn();
